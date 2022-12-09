@@ -2,42 +2,44 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import { BiCameraMovie } from "react-icons/bi";
 import styled from "styled-components";
+import GlobalStyle from "../components/GlobalStyle";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <Container>
-      <Title>
-        <BiCameraMovie className="movieicon" size={80} />
-        <StyledP>PangCinema</StyledP>
-      </Title>
-      <SubNav>
-        <StyledP2>로그인</StyledP2>
-        <StyledP2>회원가입</StyledP2>
-        <StyledP2>고객센터</StyledP2>
-        <StyledP2>맴버쉽</StyledP2>
-      </SubNav>
-      <div
-        style={{
-          borderTop: "0.5px solid #6a6a6a ",
-          marginLeft: 20,
-          marginRight: 20,
-        }}
-      ></div>
-      <MovieNav>
-        <StyleLink href="/">movie 예매 순위</StyleLink>
-        <StyleLink href="/upcoming">상영 예정작</StyleLink>
-      </MovieNav>
-      <Component {...pageProps} />
-    </Container>
+    <>
+      <GlobalStyle />
+      <Container>
+        <Title>
+          <BiCameraMovie size={80} />
+          <StyledP>PangCinema</StyledP>
+        </Title>
+        <SubNav>
+          <StyledP2>로그인</StyledP2>
+          <StyledP2>회원가입</StyledP2>
+          <StyledP2>고객센터</StyledP2>
+          <StyledP2>맴버쉽</StyledP2>
+        </SubNav>
+        <Hr />
+        <MovieNav>
+          <StyleLink href="/">movie 예매 순위</StyleLink>
+          <StyleLink href="/upcoming">상영 예정작</StyleLink>
+        </MovieNav>
+        <Component {...pageProps} />
+      </Container>
+    </>
   );
 }
-
+const Hr = styled.div`
+  border-top: 0.5px solid #6a6a6a ;
+  margin-left: 20px;
+  margin-right: 20px;
+`;
 const StyledP2 = styled.p`
   &:hover {
     transform: translateY(-3px);
     transition: transform 0.3s ease;
     color: white;
-    text-decoration: underline red .1875rem;
+    text-decoration: underline red 0.1875rem;
   }
 `;
 const SubNav = styled.nav`
@@ -64,7 +66,7 @@ const StyleLink = styled(Link)`
   &:hover {
     transform: translateY(-3px);
     transition: transform 0.3s ease;
-    text-decoration: underline red .1875rem;
+    text-decoration: underline red 0.1875rem;
   }
 `;
 
