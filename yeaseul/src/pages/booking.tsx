@@ -1,9 +1,10 @@
-import Link from "next/link";
 import styled from "styled-components";
-import { MdChair } from "react-icons/md";
 import { useState } from "react";
 import GlobalStyle from "../components/GlobalStyle";
 import Image from "next/image";
+import ReservationModal from "../components/ReservationModal";
+import React from "react";
+import ChairBoxes from "../components/ChairBox";
 
 const bookingMovieList = [
   {
@@ -57,91 +58,71 @@ const bookingMovieList = [
   },
 ];
 
-// const alphabetList = ["A","B","C","D","E","F","G","H"];
-// 65~72
-const alphabetList = Array.from({ length: 8 }, (__, i) =>
-  String.fromCharCode(i + 65)
-);
-
 export default function Booking() {
   const [movie, setMovie] = useState(bookingMovieList);
   const [movieImg, setMovieImg] = useState(bookingMovieList[0].imageUrl);
   const [childNum, setChildNum] = useState(0);
   const [adultNum, setAdultNum] = useState(0);
+  const [modalBox, setModalBox] = useState(false);
+  const [price, setPrice] = useState(0);
 
   const onChangeMovie = (e: any) => {
     setMovieImg(e.target.value);
   };
   // console.log(movieImg);
 
+  const plusChildPrice = (price: number) => {
+    setPrice(price + 10000);
+  };
+  const plusAdultPrice = (price: number) => {
+    setPrice(price + 13000);
+  };
+  const minusChildPrice = (price: number) => {
+    if (price >= 0) {
+      setPrice(price - 10000);
+    }
+    setPrice(price);
+  };
+  const minusAdultPrice = (price: number) => {
+    if (price >= 0) {
+      setPrice(price - 13000);
+    }
+    setPrice(price);
+  };
   const onClickMinus = (count: number) => {
     if (count < 1) {
       alert("최소인원은 0명입니다.");
       return;
     }
     setChildNum(count - 1);
-  }
+  };
   //???: 공통 로직은 추출해라
 
+  const onClickMinus1 = (count: number) => {
+    if (count < 1) {
+      alert("최소인원은 0명입니다.");
+      return;
+    }
+    setAdultNum(count - 1);
+  };
   return (
     <>
       <GlobalStyle />
+      {modalBox === true ? (
+        <ReservationModal
+          // setModalBox={setModalBox}  key = value
+          // adultNum={adultNum}
+          // childNum={childNum}
+          // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
+          {...{ setModalBox, adultNum, childNum, price }}
+          //js 문법 생각 js에서는 key:value 근데 같으니까 생략
+        />
+      ) : null}
       <Title>Movie reservation</Title>
       <DivBox>
         <BookingDiv1>
           <Screen></Screen>
-          <ChairBox>
-            <LineNumber>
-              {alphabetList.map((v) => (
-                <Number key={v}>{v}</Number>
-              ))}
-            </LineNumber>
-            <SeatTable>
-              {Array.from({ length: 2 }, (__, i) => (
-                <div key={i}>
-                  {Array.from(Array(8)).map((__, j) => (
-                    <div key={j}>
-                      <Seatbtn onClick={() => {}}>
-                        <MdChair size={30} />
-                      </Seatbtn>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </SeatTable>
-            <SeatTable>
-              {Array.from({ length: 8 }, (__, i) => (
-                <div key={i}>
-                  {Array.from(Array(8)).map((__, j) => (
-                    <div key={j}>
-                      <Seatbtn onClick={() => {}}>
-                        <MdChair size={30} />
-                      </Seatbtn>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </SeatTable>
-            <SeatTable>
-              {Array.from({ length: 2 }, (__, i) => (
-                <div key={i}>
-                  {Array.from(Array(8)).map((__, j) => (
-                    <div key={j}>
-                      <Seatbtn onClick={() => {}}>
-                        <MdChair size={30} />
-                      </Seatbtn>
-                    </div>
-                  ))}
-                </div>
-              ))}
-            </SeatTable>
-
-            <LineNumber>
-              {alphabetList.map((v) => (
-                <Number key={v}>{v}</Number>
-              ))}
-            </LineNumber>
-          </ChairBox>
+          <ChairBoxes />
         </BookingDiv1>
         <BookingDiv2>
           <SubTitle>Movie</SubTitle>
@@ -169,12 +150,16 @@ export default function Booking() {
                   <Personbtn
                     onClick={() => {
                       setChildNum(childNum + 1);
+                      plusChildPrice(price);
                     }}
                   >
                     +
                   </Personbtn>
                   <Personbtn
-                    onClick={() => onClickMinus(childNum)}
+                    onClick={() => {
+                      onClickMinus(childNum);
+                      minusChildPrice(price);
+                    }}
                   >
                     -
                   </Personbtn>
@@ -187,12 +172,16 @@ export default function Booking() {
                   <Personbtn
                     onClick={() => {
                       setAdultNum(adultNum + 1);
+                      plusAdultPrice(price);
                     }}
                   >
                     +
                   </Personbtn>
                   <Personbtn
-                    onClick={() => onClickMinus(adultNum)}
+                    onClick={() => {
+                      onClickMinus1(adultNum);
+                      minusAdultPrice(price);
+                    }}
                   >
                     -
                   </Personbtn>
@@ -200,22 +189,45 @@ export default function Booking() {
               </AdultBox>
             </div>
           </PersonBox>
+          <ReserationBtn
+            onClick={() => {
+              setModalBox(true);
+            }}
+          >
+            <ReservationP>총 {price}원 예매 하기</ReservationP>
+          </ReserationBtn>
         </BookingDiv2>
       </DivBox>
       <Hr></Hr>
     </>
   );
 }
-const Seatbtn = styled.button`
-  margin: 3px;
-  background-color: #292929 ;
-  color: #d4d4d4;
-  border-radius: 10px;
+
+const ReserationBtn = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: larger;
+  margin: 2rem auto;
+  height: 3rem;
+  width: 18rem;
+  border-radius: 5px;
+  background-color: red;
+  &:hover {
+    transition: transform 1s ease;
+    background-color: #470000;
+  }
 `;
+const ReservationP = styled.p`
+  text-align: center;
+
+`;
+
 const ChildBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: monospace;
 `;
 const NumBox = styled.div`
   border: 1px solid gray;
@@ -238,12 +250,15 @@ const AdultBox = styled.div`
   display: flex;
   align-items: center;
   gap: 10px;
+  font-family: monospace;
 `;
 const PersonBox = styled.div`
   display: flex;
-  gap: 20px;
+  gap: 15px;
   font-size: large;
   margin-left: 4rem;
+  height: 6rem;
+  margin-top: 1rem;
 `;
 const MinPersonBoxP = styled.p`
   border-bottom: 2px solid red;
@@ -255,9 +270,6 @@ const MinPersonBoxP2 = styled.p`
   margin-right: 1rem;
 `;
 
-const Number = styled.div`
-  display: flex;
-`;
 const MovieBookingBox = styled.div`
   display: flex;
   justify-content: center;
@@ -285,36 +297,15 @@ const MovieSelect = styled.select`
   border-radius: 5px;
 `;
 
-const LineNumber = styled.div`
-  display: flex;
-  flex-direction: column;
-  margin-top: 8px;
-  margin-left: -13px;
-  font-weight: lighter;
-  gap: 28px;
-`;
-
-const SeatTable = styled.div`
-  display: flex;
-`;
-
 const Screen = styled.div`
-  width: 50rem;
-  height: 5rem;
-  background-color: #ececec;
+  width: 48rem;
+  height: 6rem;
+  background-color: #dddddd;
   box-shadow: 0px 0px 24px;
   border-radius: 22px;
-  margin: 30px auto;
+  margin: 5rem auto 7rem;
 `;
-const ChairBox = styled.div`
-  display: flex;
-  gap: 1.9rem;
-  justify-content: center;
-  margin: 4.9rem 9.5rem;
 
-  border-left: 2px solid gray;
-  border-right: 2px solid gray;
-`;
 const Hr = styled.div`
   border-top: 0.5px solid #6a6a6a;
   margin-left: 20px;
@@ -342,11 +333,11 @@ const BookingDiv1 = styled.div`
   background-color: #292929;
   border-radius: 20px;
   width: 70rem;
-  height: 40rem;
+  height: 43rem;
 `;
 const BookingDiv2 = styled.div`
   background-color: #292929;
   border-radius: 20px;
   width: 25rem;
-  height: 40rem;
+  height: 43rem;
 `;
