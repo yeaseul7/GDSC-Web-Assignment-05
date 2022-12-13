@@ -12,9 +12,6 @@ const SeatBtnWrap = ({ childNum, adultNum, seatCheck}: any) => {
     <Seatbtn
       onClick={() => {
         setColor((prev) => !prev);
-        if(seatCheck>1){
-          return;
-        }
       }}
       color={color ? initColor : "red"}
     >

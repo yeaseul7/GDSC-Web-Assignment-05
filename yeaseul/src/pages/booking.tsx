@@ -78,16 +78,16 @@ export default function Booking() {
     setPrice(price + 13000);
   };
   const minusChildPrice = (price: number) => {
-    if (price >= 0) {
-      setPrice(price - 10000);
+    if (price < 1) {
+      return;
     }
-    setPrice(price);
+    setPrice(price - 10000);
   };
   const minusAdultPrice = (price: number) => {
-    if (price >= 0) {
-      setPrice(price - 13000);
+    if (price < 1) {
+      return;
     }
-    setPrice(price);
+    setPrice(price - 13000);
   };
   const onClickMinus = (count: number) => {
     if (count < 1) {
@@ -220,7 +220,6 @@ const ReserationBtn = styled.div`
 `;
 const ReservationP = styled.p`
   text-align: center;
-
 `;
 
 const ChildBox = styled.div`

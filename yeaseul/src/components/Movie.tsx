@@ -49,6 +49,52 @@ const movieList = [
   },
 ];
 
+const SubIntro = ({ setSubBox }: any) => {
+  return (
+    <SubMenu onMouseLeave={() => setSubBox(true)}>
+      줄거리
+      <br />
+      블라블라블라블라
+      <br />아
+    </SubMenu>
+  );
+};
+
+const OnMovieBlock = ({ v }: any) => {
+  const [subBox, setSubBox] = useState(true);
+  return (
+    <Movieblocks>
+      <Link href="/booking">
+        <ImageBox>
+          {!subBox ? <SubIntro {...{ setSubBox, v }} /> : null}
+          <Image
+            key={v.title}
+            src={v.imageUrl}
+            alt={v.title}
+            width={250}
+            height={350}
+            onMouseOver={() => setSubBox(false)}
+          />
+        </ImageBox>
+      </Link>
+      <div>
+        <LikeBtn
+          href={v.movieUrl}
+          target="_blank"
+          onClick={(event) => {
+            if (!v.movieUrl) {
+              alert("이 영화는 예고편이 존재하지 않습니다.");
+              event.preventDefault();
+            }
+          }}
+        >
+          미리보기
+        </LikeBtn>
+      </div>
+    </Movieblocks>
+  );
+};
+
 export default function Movie() {
   const [isEmpty, setIsEmpty] = useState<boolean>(true);
 
@@ -59,31 +105,7 @@ export default function Movie() {
           return (
             <>
               <GlobalStyle />
-              <Movieblocks>
-              <Link href="/booking">
-                <Image
-                  key={v.title}
-                  src={v.imageUrl}
-                  alt={v.title}
-                  width={250}
-                  height={350}
-                />
-                </Link>
-                <div>
-                  <LikeBtn
-                    href={v.movieUrl}
-                    target="_blank"
-                    onClick={(event) => {
-                      if (!v.movieUrl) {
-                        alert("이 영화는 예고편이 존재하지 않습니다.");
-                        event.preventDefault();
-                      }
-                    }}
-                  >
-                    미리보기
-                  </LikeBtn>
-                </div>
-              </Movieblocks>
+              <OnMovieBlock {...{ v }} />
             </>
           );
         })}
@@ -92,6 +114,22 @@ export default function Movie() {
   );
 }
 
+const ImageBox = styled.div`
+  position: relative;
+`;
+const SubMenu = styled.div`
+  width: 250px;
+  height: 350px;
+  color: white;
+  margin-bottom: 5px;
+  position: absolute;
+  padding: 1rem;
+  &:hover {
+    transition-duration: 1s;
+    transition-property: all;
+    background-color: #0a0a0ad0;
+  }
+`;
 const MovieBoard = styled.div`
   display: flex;
   gap: 10px;
