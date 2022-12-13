@@ -12,24 +12,28 @@ const bookingMovieList = [
     imageUrl: "/데시벨.jpeg",
     movieUrl: "https://www.youtube.com/watch?v=jGcQXD5EdkQ",
     id: 1,
+    summary:"물이 끓는 주전자 소리, 창문 여는 소리, 놀이터 아이들의 웃음 소리… 잠시 후, 거대한 굉음과 함께 단독 주택이 폭발했다는 뉴스 속보가 전해진다. 그리고, 뉴스를 지켜보던 전직 해군 부함장(김래원)에게 걸려온 전화 “소음이 커지면 터집니다. 다음 타깃은 축구 경기장이에요” 사태를 파악할 겨를도 없이, 관중들로 가득 찬 축구 경기장을 다음 테러의 타깃으로 지목하는 폭탄 설계자(이종석) 소음이 커지는 순간 폭발하는 특수 폭탄의 위협은 계속되고, 사상 최대의 도심 폭탄 테러를 막기 위해 모든 비밀을 손에 쥔 폭탄 설계자를 찾아야만 하는데… 도심 한복판에서 벌어지는 사운드 테러 액션 오늘 반드시 이 폭발을 막아야만 한다!"
   },
   {
     title: "동감",
     imageUrl: "/동감.jpeg",
     movieUrl: "https://www.youtube.com/watch?v=X8b3KvxybA4",
     id: 2,
+    summary:""
   },
   {
     title: "에브리씽",
     imageUrl: "/에브리씽.webp",
     movieUrl: "https://www.youtube.com/watch?v=mWEEh9AxzEM",
     id: 3,
+    summary:""
   },
   {
     title: "올빼미",
     imageUrl: "/올빼미.jpeg",
     movieUrl: "https://www.youtube.com/watch?v=eRX5_KUyx7c",
     id: 4,
+    summary:""
   },
   {
     title: "자백",
@@ -37,24 +41,28 @@ const bookingMovieList = [
     movieUrl:
       "https://www.youtube.com/results?search_query=%EC%9E%90%EB%B0%B1+%EC%98%88%EA%B3%A0%ED%8E%B8",
     id: 5,
+    summary:""
   },
   {
     title: "짱구",
     imageUrl: "/짱구.png",
     movieUrl: "https://www.youtube.com/watch?v=qAPdFL_Z1ck",
     id: 6,
+    summary:""
   },
   {
     title: "폴",
     imageUrl: "/폴.jpeg",
     movieUrl: "https://www.youtube.com/watch?v=jOPihnkCNmU",
     id: 7,
+    summary:""
   },
   {
     title: "압꾸정",
     imageUrl: "/압꾸정.jpeg",
     movieUrl: "https://www.youtube.com/watch?v=I03P8Ec6lfg",
     id: 8,
+    summary:""
   },
 ];
 

@@ -58,7 +58,7 @@ const commingList = [
 const SubIntro = ({ v, setSubBox }: any) => {
   return (
     <SubMenu onMouseLeave={() => setSubBox(true)}>
-      <h1>줄거리</h1>
+      <SubH1>줄거리</SubH1>
       {v.summary}
     </SubMenu>
   );
@@ -115,6 +115,11 @@ export default function Upcoming() {
     </div>
   );
 }
+
+const SubH1 = styled.h1`
+  margin-top: 5px;
+  margin-bottom: 5px;
+`
 const ImageBox = styled.div`
   position: relative;
 `;
@@ -145,6 +150,7 @@ const SubMenu = styled.div`
   margin-bottom: 5px;
   position: absolute;
   padding: 10px;
+  letter-spacing: 2px;
   &:hover {
     transition-duration: 1s;
     transition-property: all;
