@@ -2,7 +2,7 @@ import type { AppProps } from "next/app";
 import Link from "next/link";
 import { BiCameraMovie } from "react-icons/bi";
 import styled from "styled-components";
-import GlobalStyle from "../components/GlobalStyle";
+import GlobalStyle from "../styles/style";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
