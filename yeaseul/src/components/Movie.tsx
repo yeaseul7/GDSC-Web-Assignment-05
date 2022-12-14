@@ -1,32 +1,30 @@
 import Image from "next/image";
-import { useRouter } from "next/router";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import GlobalStyle from "../styles/style";
 import Link from "next/link";
-import {movieList} from "../constants"
+import { movieList } from "../constants";
 
-
-const SubIntro = ({ setSubBox, v }: any) => {
+const SubIntro = ({ setSubBox, summary }: any) => {
   return (
     <SubMenu onMouseLeave={() => setSubBox(true)}>
       <h1>줄거리</h1>
-      {v.summary}
+      {summary}
     </SubMenu>
   );
 };
 
-const OnMovieBlock = ({ v }: any) => {
+const OnMovieBlock = ({ title, imageUrl, movieUrl, summary }: any) => {
   const [subBox, setSubBox] = useState(true);
   return (
     <Movieblocks>
       <Link href="/purchase">
         <ImageBox>
-          {!subBox && <SubIntro {...{ setSubBox, v }} /> }
+          {!subBox && <SubIntro setSubBox={setSubBox} summary={summary} />}
           <Image
-            key={v.title}
-            src={v.imageUrl}
-            alt={v.title}
+            key={title}
+            src={imageUrl}
+            alt={title}
             width={250}
             height={350}
             onMouseOver={() => setSubBox(false)}
@@ -35,10 +33,10 @@ const OnMovieBlock = ({ v }: any) => {
       </Link>
       <div>
         <LikeBtn
-          href={v.movieUrl}
+          href={movieUrl}
           target="_blank"
           onClick={(event) => {
-            if (!v.movieUrl) {
+            if (!movieUrl) {
               alert("이 영화는 예고편이 존재하지 않습니다.");
               event.preventDefault();
             }
@@ -58,11 +56,15 @@ export default function Movie() {
     <div>
       <GlobalStyle />
       <MovieBoard>
-        {movieList.map((v) => {
+        {movieList.map(({ title, summary, id, imageUrl, movieUrl }) => {
           return (
-            <>
-              <OnMovieBlock {...{ v }} />
-            </>
+            <OnMovieBlock
+              key={id}
+              title={title}
+              summary={summary}
+              imageUrl={imageUrl}
+              movieUrl={movieUrl}
+            />
           );
         })}
       </MovieBoard>

@@ -5,11 +5,9 @@ import Image from "next/image";
 import ReservationModal from "./ReservationModal";
 import React from "react";
 import ChairBoxes from "./ChairBox";
-import {movieList} from "../constants"
-
+import { movieList } from "../constants";
 
 export default function Purchase() {
-  const [movie, setMovie] = useState(movieList);
   const [movieImg, setMovieImg] = useState(movieList[0].imageUrl);
   const [childNum, setChildNum] = useState(0);
   const [adultNum, setAdultNum] = useState(0);
@@ -21,40 +19,44 @@ export default function Purchase() {
   };
   // console.log(movieImg);
 
-  const plusChildPrice = (price: number) => {
-    setPrice(price + 10000);
+  const plusPrice = (price: number) => {
+    setPrice((prevPrice) => prevPrice + price);
   };
-  const plusAdultPrice = (price: number) => {
-    setPrice(price + 13000);
-  };
-  const minusChildPrice = (price: number) => {
+  const minusPrice = (price: number) => {
     if (price < 1) {
       return;
     }
-    setPrice(price - 10000);
+    setPrice((prevPrice) => prevPrice - price);
   };
-  const minusAdultPrice = (price: number) => {
-    if (price < 1) {
-      return;
-    }
-    setPrice(price - 13000);
-  };
-  const onClickMinus = (count: number) => {
+  // const onClickMinus = (count: number, setter: any) => {
+  //   if (count < 1) {
+  //     alert("최소인원은 0명입니다.");
+  //     return;
+  //   }
+  //   setter(count - 1);
+  // };
+  const onClickMinus = (count: number, callback: any) => {
     if (count < 1) {
       alert("최소인원은 0명입니다.");
       return;
     }
-    setChildNum(count - 1);
+    callback();
+  };
+  const onClickMinusChild = () => {
+    onClickMinus(
+      childNum,
+      setChildNum((prev) => prev - 1)
+    );
   };
   //???: 공통 로직은 추출해라
 
-  const onClickMinus1 = (count: number) => {
-    if (count < 1) {
-      alert("최소인원은 0명입니다.");
-      return;
-    }
-    setAdultNum(count - 1);
+  const onClickMinusAdult = () => {
+    onClickMinus(adultNum, () =>
+      setAdultNum((prevAdultNum) => prevAdultNum - 1)
+    );
   };
+
+  const props = { setModalBox, adultNum, childNum, price };
   return (
     <>
       <GlobalStyle />
@@ -63,11 +65,15 @@ export default function Purchase() {
           // setModalBox={setModalBox}  key = value
           // adultNum={adultNum}
           // childNum={childNum}
+          // price={price}
           // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax
           {...{ setModalBox, adultNum, childNum, price }}
+
           //js 문법 생각 js에서는 key:value 근데 같으니까 생략
         />
-      ) }
+        // React.createElement(ReservationModal, { setModalBox, adultNum, childNum, price }, null);
+        // React.createElement(ReservationModal, { setModalBox, adultNum, childNum, price }, null);
+      )}
       <Title>Movie reservation</Title>
       <DivBox>
         <BookingDiv1>
@@ -99,16 +105,16 @@ export default function Purchase() {
                 <BtnBox>
                   <Personbtn
                     onClick={() => {
-                      setChildNum(childNum + 1);
-                      plusChildPrice(price);
+                      setChildNum((prevChildNum) => prevChildNum + 1);
+                      plusPrice(10000);
                     }}
                   >
                     +
                   </Personbtn>
                   <Personbtn
                     onClick={() => {
-                      onClickMinus(childNum);
-                      minusChildPrice(price);
+                      onClickMinusChild();
+                      minusPrice(10000);
                     }}
                   >
                     -
@@ -121,16 +127,16 @@ export default function Purchase() {
                 <BtnBox>
                   <Personbtn
                     onClick={() => {
-                      setAdultNum(adultNum + 1);
-                      plusAdultPrice(price);
+                      setAdultNum((prevAdultNum) => prevAdultNum + 1);
+                      plusPrice(13000);
                     }}
                   >
                     +
                   </Personbtn>
                   <Personbtn
                     onClick={() => {
-                      onClickMinus1(adultNum);
-                      minusAdultPrice(price);
+                      onClickMinusAdult();
+                      minusPrice(13000);
                     }}
                   >
                     -

@@ -2,10 +2,11 @@ import { useState } from "react";
 import { MdChair } from "react-icons/md";
 import styled from "styled-components";
 import { alphabetList } from "../constants";
+import * as constants from "../constants";
 
 const initColor = "#d4d4d4";
 
-const SeatBtnWrap = ({ childNum, adultNum, seatCheck}: any) => {
+const SeatBtnWrap = ({ childNum, adultNum, seatCheck }: any) => {
   const [color, setColor] = useState(true);
 
   return (
@@ -20,23 +21,13 @@ const SeatBtnWrap = ({ childNum, adultNum, seatCheck}: any) => {
   );
 };
 
-const ChairBoxes = ({ childNum, adultNum }: any) => {
-  const [color, setColor] = useState(true);
-  const [seatCheck, setSeatCheck] = useState(0);
+// interface ChairBoxesProps {
+//   childNum: number;
+//   adultNum: number;
+// }
 
-  const onMaxCheck = () => {
-    if (seatCheck > childNum + adultNum) {
-      alert("선택하신 인원을 초과하였습니다.");
-    }
-    setSeatCheck((prevSeatCheck) => prevSeatCheck + 1);
-    console.log(seatCheck);
-    
-  };
-
-  const onChangeColor = () => {
-    setColor(false);
-  };
-
+// const ChairBoxes = ({ childNum, adultNum }: ChairBoxesProps) => {
+const ChairBoxes = () => {
   return (
     <ChairBox>
       <LineNumber>
@@ -49,8 +40,7 @@ const ChairBoxes = ({ childNum, adultNum }: any) => {
           <div key={i}>
             {Array.from(Array(8)).map((__, j) => (
               <div key={j}>
-                <SeatBtnWrap 
-                />
+                <SeatBtnWrap />
               </div>
             ))}
           </div>
